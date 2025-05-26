@@ -1,0 +1,52 @@
+TERMWORK 4           
+#include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
+#define MAX 200
+
+void getdata(int arr[]) {
+    int i;
+    for (i = 0; i < MAX; i++) {
+        arr[i] = rand();  // Generate random numbers
+        printf("%d ", arr[i]);
+    }
+}
+
+void insertionSort(int arr[], int n) {
+    int i, j, v;
+    for (i = 1; i < n; i++) {
+        v = arr[i];  // Store the current element
+        j = i - 1;
+
+        // Shift elements of the sorted part to the right
+        while (j >= 0 && arr[j] > v) {
+            arr[j + 1] = arr[j];
+            j = j - 1;
+        }
+
+        // Insert the current element at the correct position
+        arr[j + 1] = v;
+    }
+}
+
+int main() {
+    int arr[MAX];
+    clock_t start, end;
+
+    printf("Randomly generated array is : \n\n");
+    getdata(arr);  // Generate random array
+
+    start = clock();
+
+    insertionSort(arr, MAX);  // Sorting using Insertion Sort
+
+    printf("\n\nAfter sorting, Array becomes : \n\n");
+    for(int i=0;i<MAX;i++){
+        printf("%d ",arr[i]);
+    }
+    end = clock();
+
+    printf("\n\nTime Taken is = %f seconds\n", ((double)(end - start)) / CLOCKS_PER_SEC);
+
+    return 0;
+}

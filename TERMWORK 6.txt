@@ -1,0 +1,86 @@
+#include <stdio.h>
+#include <stdlib.h>
+#define MAX 20
+
+int main(int argc, char *argv[]) {
+    int x[MAX] = {0}, weights[MAX], values[MAX], v[MAX][MAX], n, i, j, m, val1, val2;
+
+    // Input number of items
+    printf("Enter the number of items: ");
+    scanf("%d", &n);
+
+    // Input item weights
+    printf("Enter weights: \n");
+    for(i = 0; i < n; i++)  // Start from 0 to work with 0-based index
+        scanf("%d", &weights[i]);
+
+    // Input item values
+    printf("Enter values: \n");
+    for(i = 0; i < n; i++)  // Start from 0 to work with 0-based index
+        scanf("%d", &values[i]);
+
+    // Input knapsack capacity
+    printf("Enter the KNAPSACK capacity: ");
+    scanf("%d", &m);
+
+    // Initialize DP table
+    for(i = 0; i <= n; i++) {
+        for(j = 0; j <= m; j++) {
+            if(i == 0 || j == 0)
+                v[i][j] = 0;
+            else
+                v[i][j] = -1;
+        }
+    }
+
+    // Dynamic programming process to fill the table
+    for(i = 1; i <= n; i++) {
+        for(j = 1; j <= m; j++) {
+            if(j < weights[i-1])  // Adjusted for 0-based index
+                v[i][j] = v[i-1][j];
+            else {
+                val1 = values[i-1] + v[i-1][j-weights[i-1]];  // Adjusted for 0-based index
+                val2 = v[i-1][j];
+                if(val1 > val2)
+                    v[i][j] = val1;
+                else
+                    v[i][j] = val2;
+            }
+        }
+    }
+
+    // Print the DP table
+    printf("The matrix is:\n");
+    for(i = 0; i <= n; i++) {
+        for(j = 0; j <= m; j++) {
+            printf("%d\t", v[i][j]);
+        }
+        printf("\n");
+    }
+
+    // Output the maximum profit
+    printf("Maximum profit obtained is: %d\n", v[n][m]);
+
+    // Track the selected items
+    i = n;
+    j = m;
+    while(i != 0 && j != 0) {
+        if(v[i][j] != v[i-1][j]) {
+            x[i-1] = 1;  // Mark item as selected (0-based index for x)
+            j = j - weights[i-1];  // Adjust index for weights (0-based)
+        }
+        i = i - 1;
+    }
+
+    // Output selected item weights
+    printf("Weights of selected items are: {");
+    for(i = 0; i < n; i++) {
+        if(x[i] == 1)
+            printf(" %d ", weights[i]);  // Print weights instead of values
+    }
+    printf("}\n");
+
+    system("PAUSE");
+    return 0;
+}
+

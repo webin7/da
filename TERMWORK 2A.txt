@@ -1,0 +1,90 @@
+TERMWORK 2A    
+DATE : 19/02/2025
+
+#include <stdio.h>
+#include <stdlib.h>
+
+int main()
+{
+    int item,pos,flag=0,i,a[5];
+    printf("Enter array elements : ");
+    for(i=0;i<5;i++)
+    {
+        scanf("%d",&a[i]);
+    }
+    printf("Enter item to search : ");
+    scanf("%d",&item);
+    for(i=0;i<5;i++)
+    {
+        if(a[i]==item)
+        {
+            flag=1;
+            pos=i;
+            break;
+        }
+    }
+    if(flag==1)
+    {
+        printf("%d is present in the array at position %d.\n",item,pos+1);
+    }
+    else
+    {
+        printf("%d is not found in the array.\n");
+    }
+    return 0;
+}
+
+=> OUTPUT
+Enter array elements : 4 6 2 8 7
+Enter item to search : 2
+2 is present in the array at position 3.
+
+=================================================================================================================================
+
+TERMWORK 2B   DATE 19/02/2025
+
+#include <stdio.h>
+#include <stdlib.h>
+#include<time.h>
+#define MAX 200
+
+void getdata(int arr[])
+{
+    int i;
+    for(i=0;i<MAX;i++)
+    {
+        arr[i]=rand();
+        printf("%d ",arr[i]);
+    }
+}
+int main()
+{
+    int item,pos,flag=0,i,a[MAX];
+    clock_t start1=0,end1=0;
+    getdata(a);
+    start1=clock();
+    printf("\n\nEnter item to search : ");
+    scanf("%d",&item);
+    for(i=0;i<MAX;i++)
+    {
+        if(a[i]==item)
+        {
+            flag=1;
+            pos=i;
+            break;
+        }
+    }
+    if(flag==1)
+    {
+        printf("\n%d is present in the array at position %d.\n",item,pos+1);
+    }
+    else
+    {
+        printf("\n%d is not found in the array.\n",item);
+    }
+    end1=clock();
+    printf("\nTime taken is = %f\n",((float)(end1-start1))/CLOCKS_PER_SEC);
+    return 0;
+}
+
+SSAS

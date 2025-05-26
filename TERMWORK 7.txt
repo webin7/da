@@ -1,0 +1,102 @@
+TERMWORK 7                   
+#include <stdio.h>
+#include <stdlib.h>
+
+int min(int a, int b) {
+    return (a < b) ? a : b;
+}
+
+void floyds(int p[10][10], int n) {
+    int i, j, k;
+    for(k = 1; k <= n; k++) {
+        for(i = 1; i <= n; i++) {
+            for(j = 1; j <= n; j++) {
+                if(p[i][j] > p[i][k] + p[k][j]) {
+                    p[i][j] = p[i][k] + p[k][j];
+                }
+            }
+        }
+    }
+}
+
+int main() {
+    int p[10][10], w, n, e, u, v, i, j;
+
+    printf("Enter the number of vertices: ");
+    scanf("%d", &n);
+    printf("Enter the number of edges: ");
+    scanf("%d", &e);
+
+    // Initialize the matrix with infinity (999) for all non-diagonal elements
+    // Diagonal elements are initialized to 0 (distance from a vertex to itself is 0)
+    for(i = 1; i <= n; i++) {
+        for(j = 1; j <= n; j++) {
+            if(i == j)
+                p[i][j] = 0;  // Distance to itself is 0
+            else
+                p[i][j] = 999;  // Set to infinity
+        }
+    }
+
+    // Input the edges and their weights
+    for(i = 1; i <= e; i++) {
+        printf("Enter the end vertices of edge %d with its weight: ", i);
+        scanf("%d%d%d", &u, &v, &w);
+        if(u <= n && v <= n) {
+            p[u][v] = w;
+        } else {
+            printf("Invalid vertex number. Please enter valid vertex numbers.\n");
+            i--;  // Decrement i to repeat the input for this edge
+        }
+    }
+
+    // Print the input matrix (Adjacency Matrix)
+    printf("\nMatrix of input data:\n");
+    for(i = 1; i <= n; i++) {
+        for(j = 1; j <= n; j++) {
+            printf("%d\t", p[i][j]);
+        }
+        printf("\n");
+    }
+
+    // Run Floyd-Warshall algorithm to compute shortest paths
+    floyds(p, n);
+
+    // Print the result (Shortest paths)
+    printf("\nThe shortest paths are:\n");
+    for(i = 1; i <= n; i++) {
+        for(j = 1; j <= n; j++) {
+            if(p[i][j] == 999)
+                printf("999\t");  // If there's no path, print "INF"
+            else
+                printf("%d\t", p[i][j]);
+        }
+        printf("\n");
+    }
+
+    return 0;
+}
+
+OUTPUT ==>
+
+Enter the number of vertices: 3
+Enter the number of edges: 9
+Enter the end vertices of edge 1 with its weight: 1 1 0
+Enter the end vertices of edge 2 with its weight: 1 2 4
+Enter the end vertices of edge 3 with its weight: 1 3 5
+Enter the end vertices of edge 4 with its weight: 2 1 2
+Enter the end vertices of edge 5 with its weight: 2 2 0
+Enter the end vertices of edge 6 with its weight: 2 3 999
+Enter the end vertices of edge 7 with its weight: 3 1 999
+Enter the end vertices of edge 8 with its weight: 3 2 2
+Enter the end vertices of edge 9 with its weight: 3 3 0
+
+Matrix of input data:
+0       4       5
+2       0       999
+999     2       0
+
+The shortest paths are:
+0       4       5
+2       0       7
+4       2       0

@@ -1,0 +1,89 @@
+TERMWORK 09                  
+#include <stdio.h>
+#include <stdlib.h>
+#define INF 999
+
+int a[10][10], visited[10], n, e, cost = 0;
+
+void get() {
+    int i, j;
+
+    printf("Enter the number of cities (nodes): ");
+    scanf("%d", &n);
+
+    printf("Enter weight matrix (enter %d for no direct connection):\n", INF);
+
+    for (i = 1; i <= n; i++) {
+        for (j = 1; j <= n; j++) {
+            scanf("%d", &a[i][j]);
+            if (a[i][j] == 0 && i != j) {
+                a[i][j] = INF;
+            }
+        }
+        visited[i] = 0;
+    }
+}
+
+void mincost(int city) {
+    int i, ncity;
+    visited[city] = 1;
+    printf("%d -> ", city);
+    ncity = least(city);
+    if (ncity == -1) {
+        for (i = 1; i <= n; i++) {
+            if (a[city][i] != INF && visited[i] == 0) {
+                ncity = i;
+                printf("%d", ncity);
+                cost += a[city][ncity]; // Increment cost here
+                visited[ncity] = 1;
+                return;
+            }
+        }
+        return;
+    }
+    cost += a[city][ncity]; // Increment cost when moving to the least neighbor
+    mincost(ncity);
+}
+
+int least(int c) {
+    int i, nc = -1;
+    int min = INF;
+
+    for (i = 1; i <= n; i++) {
+        if ((a[c][i] != INF) && (visited[i] == 0)) {
+            if (a[c][i] < min) {
+                min = a[c][i];
+                nc = i;
+            }
+        }
+    }
+    return nc;
+}
+
+void put() {
+    printf("\nMinimum cost : %d\n", cost);
+}
+
+int main() {
+    get();
+    printf("\nThe Path is : ");
+    mincost(1);
+    printf("1\n");
+    put();
+    return 0;
+}
+
+OUTPUT =>
+
+Enter the number of cities (nodes): 5
+Enter weight matrix (enter 999 for no direct connection):
+0 2 999 5 1
+2 0 4 999 999
+999 4 0 3 999
+5 999 3 0 2
+1 999 999 2 0
+
+The Path is : 1 -> 5 -> 4 -> 3 -> 2 -> 1
+
+Minimum cost : 10
+

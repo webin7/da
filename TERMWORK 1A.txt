@@ -1,0 +1,74 @@
+TERMWORK 1A  DATE : 13/02/2025
+
+#include <stdio.h>
+#include <stdlib.h>
+//Function to compute gcd
+int gcd(int m, int n)
+{
+    int r;
+    while(n!=0)
+    {
+        r=m%n;
+        m=n;
+        n=r;
+    }
+    return m;
+}
+int main()
+{
+    int m,n;
+    //Input two non negative and non zero numbers.
+    printf("Enter two non negative and non zero numbers.\n");
+    scanf("%d%d",&m,&n);
+    if(m<=0||n<=0)
+    {
+        printf("Invalid input.\nTry again.\n");
+    }
+    else
+    {
+        int result=gcd(m,n);
+        printf("GCD of %d and %d is %d.\n",m,n,result);
+    }
+    return 0;
+}
+
+=> OUTPUT
+Enter two non negative and non zero numbers.
+50 5
+GCD of 50 and 5 is 5.
+=================================================================================================================================
+
+TERMWORK 1B  DATE : 13/02/2025
+
+#include <stdio.h>
+
+int findGCD(int a, int b) {
+    int t = (a < b) ? a : b;
+    while (t > 0) {
+        if (a % t == 0 && b % t == 0) {
+            return t;
+        }
+        t--;
+    }
+    return 1; // Fallback in case of error, although unreachable for positive inputs
+}
+
+int main() {
+    int m, n;
+    printf("Enter two non negative and non zero numbers.\n");
+    scanf("%d %d", &m, &n);
+
+    if (m <= 0 || n <= 0) {
+        printf("Invalid input.\nTry again.\n");
+    } else {
+        int gcd = findGCD(m, n);
+        printf("GCD(%d, %d) = %d\n", m, n, gcd);
+    }
+
+    return 0;
+}
+
+=>OUTPUT
+Enter two non negative nad non zero numbers.
+10 5
+GCD(10,5)=5
