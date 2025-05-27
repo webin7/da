@@ -84,3 +84,19 @@ int main(int argc, char *argv[]) {
     return 0;
 }
 
+OUTPUT
+
+ENTER NO. OF WEIGHT=4
+ENTER WEIGHTS:
+3
+4
+5
+6
+ENTER VALUES:
+2
+3
+4
+1
+ENTER KNAPSACK CAP: 8
+THE MATRIX IS:
+
